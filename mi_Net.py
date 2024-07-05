@@ -101,7 +101,7 @@ def train_eval(model, train_set):
         train_acc[ibatch] = result[1]
     return np.mean(train_loss), np.mean(train_acc)
 
-def mi_Net(dataset):
+def mi_Net(dataset, args):
     """Train and evaluate on mi-Net.
     Parameters
     -----------------
@@ -150,7 +150,7 @@ def mi_Net(dataset):
     print 'run time:', (t2-t1) / 60.0, 'min'
     print 'test_acc={:.3f}'.format(test_acc)
 
-    return test_acc
+    return test_acc, model
 
 if __name__ == '__main__':
 
@@ -167,6 +167,6 @@ if __name__ == '__main__':
         dataset = load_dataset(args.dataset, n_folds)
         for ifold in range(n_folds):
             print 'run=', irun, '  fold=', ifold
-            acc[irun][ifold] = mi_Net(dataset[ifold])
+            acc[irun][ifold] = mi_Net(dataset[ifold], args)
     print 'mi-net mean accuracy = ', np.mean(acc)
     print 'std = ', np.std(acc)
